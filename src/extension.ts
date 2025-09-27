@@ -78,18 +78,26 @@ async function startHell(editor: vscode.TextEditor) {
             vscode.window.showInformationMessage(generateRoast(fullText), { modal: true });
 
             if (rageLevel === 1) {
-                // LOW rage: minor destructive edits
+                // LOW rage: minor destructive edits + function/variable chaos
                 editor.edit(editBuilder => {
-                    const newText = fullText.replace(/\blet\b/g, 'var');
+                    let newText = fullText
+                        // Rename functions
+                        .replace(/function\s+([a-zA-Z0-9_]+)\s*\(/g, 'function blandFunction(')
+                        // Chaos for x, y, z
+                        .replace(/\b(x|y|z)\b/g, (match) => match === 'x' ? 'you_freckin_donkey' 
+                                                               : match === 'y' ? 'you_code_like_old_people_freck' 
+                                                               : 'you_should_quit_coding');
+            
                     editBuilder.replace(new vscode.Range(
                         new vscode.Position(0, 0),
                         new vscode.Position(editor.document.lineCount, 0)
                     ), newText);
                 });
+            
                 vscode.window.showInformationMessage("Gordon is slightly annoyed… 🔥", { modal: true });
-
+            
                 // Schedule next rage increment slower than first roast
-                scheduleRage(15000); // next after 15s
+                scheduleRage(20000); // next after 15s
             } else if (rageLevel === 2) {
                 // MEDIUM rage: function renaming, variable chaos + comments
                 editor.edit(editBuilder => {
@@ -101,7 +109,7 @@ async function startHell(editor: vscode.TextEditor) {
                     const numComments = 5 + Math.floor(Math.random() * 6);
                     for (let i = 0; i < numComments; i++) {
                         const lineIndex = Math.floor(Math.random() * lines.length);
-                        const roastComment = `// ${generateRoast(newText)}`;
+                        const roastComment = `# ${generateRoast(newText)}`;
                         lines.splice(lineIndex, 0, roastComment);
                     }
                     newText = lines.join('\n');
@@ -116,16 +124,20 @@ async function startHell(editor: vscode.TextEditor) {
                 // Schedule next rage increment slower than previous
                 scheduleRage(50000); // next after 25s
             } else if (rageLevel >= 3) {
-                // HIGH rage: close VS Code
-                vscode.window.showErrorMessage("Gordon is extremely angry! Closing VS Code!", { modal: true });
-                await vscode.commands.executeCommand('workbench.action.closeWindow');
-                return; // stop scheduling
+                // HIGH rage: show warning first
+    vscode.window.showErrorMessage("Gordon is extremely angry! Closing VS Code in a few seconds...", { modal: true });
+
+    // Wait 5 seconds before closing
+    await new Promise(resolve => setTimeout(resolve, 10000));
+
+    await vscode.commands.executeCommand('workbench.action.closeWindow');
+    return; // stop scheduling
             }
 
             // Show a quick roast every 3–5 seconds while waiting for rage
             const quickRoastInterval = setInterval(() => {
                 vscode.window.showInformationMessage(generateRoast(fullText), { modal: true });
-            }, 7000 + Math.floor(Math.random() * 4000));
+            }, 7000 + Math.floor(Math.random() * 2000));
 
             // Clear quick roast interval when rage changes
             setTimeout(() => clearInterval(quickRoastInterval), delay);

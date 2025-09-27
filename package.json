@@ -3,7 +3,9 @@
   "displayName": "CodeRoast",
   "publisher": "yourname",
   "version": "0.0.2",
-  "engines": { "vscode": "^1.80.0" },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
   "activationEvents": [
     "onCommand:coderoast.hell"
   ],
@@ -14,9 +16,9 @@
     "watch": "tsc -watch -p ./"
   },
   "devDependencies": {
+    "@types/node": "^20.5.7",
     "typescript": "^5.2.2",
-    "vscode": "^1.1.37",
-    "@types/node": "^20.5.7"
+    "vscode": "^1.1.37"
   },
   "contributes": {
     "commands": [
@@ -25,5 +27,8 @@
         "title": "💀 Enter Hell Mode"
       }
     ]
+  },
+  "dependencies": {
+    "say": "^0.16.0"
   }
 }
