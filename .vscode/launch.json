@@ -1,13 +1,29 @@
 {
-    "version": "0.2.0",
-    "configurations": [
+  "name": "coderoast",
+  "displayName": "CodeRoast",
+  "publisher": "yourname",
+  "version": "0.0.3",
+  "engines": { "vscode": "^1.80.0" },
+  "activationEvents": [
+    "onCommand:coderoast.hell"
+  ],
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "vscode": "^1.1.37",
+    "@types/node": "^20.5.7"
+  },
+  "contributes": {
+    "commands": [
       {
-        "name": "Run Extension",
-        "type": "extensionHost",
-        "request": "launch",
-        "args": ["--extensionDevelopmentPath=${workspaceFolder}"],
-        "outFiles": ["${workspaceFolder}/out/**/*.js"]
+        "command": "coderoast.hell",
+        "title": "💀 Enter Hell Mode"
       }
     ]
   }
-  
+}
