@@ -1,0 +1,27 @@
+{
+  "name": "coderoast",
+  "displayName": "CodeRoast",
+  "publisher": "yourname",
+  "version": "0.0.1",
+  "engines": { "vscode": "^1.80.0" },
+  "activationEvents": ["onCommand:coderoast.roastCode"],
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "tsc -p ./",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "vscode": "^1.88.0",
+    "@types/node": "^20.5.7"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "coderoast.roastCode",
+        "title": "Roast My Code"
+      }
+    ]
+  }
+}
